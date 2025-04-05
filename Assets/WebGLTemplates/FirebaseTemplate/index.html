@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>CardMatchGame</title>
 
-    <!-- Firebase SDK v8 사용 (v9은 모듈 방식이라 Unity WebGL과 충돌) -->
+    <!-- Firebase v8 CDN -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
 
-    <!-- Firebase 초기화 -->
+    <!-- Firebase 초기화 및 Unity 호출 함수 정의 -->
     <script>
       var firebaseConfig = {
         apiKey: "AIzaSyAMk7TPjeVCzpNpOwcAEOfaenIRvbwgaNg",
@@ -24,21 +22,25 @@
         measurementId: "G-KCK0QTF6BT"
       };
 
+      // Firebase 초기화
       firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
 
-      // Unity에서 호출할 함수 등록
+      // Unity에서 호출할 전역 함수
       window.UploadScoreToFirebase = function (playerId, stage, score) {
-        const ref = firebase.database().ref("scores").push();
-        ref.set({
+        if (!firebase || !firebase.database) {
+          console.error("Firebase가 아직 초기화되지 않았습니다.");
+          return;
+        }
+
+        firebase.database().ref("scores").push({
           playerId: playerId,
           stage: stage,
           score: score,
           timestamp: new Date().toISOString()
         }).then(() => {
-          console.log("Firebase 기록 성공");
-        }).catch((error) => {
-          console.error("Firebase 기록 실패:", error);
+          console.log(" Firebase 기록 성공");
+        }).catch((err) => {
+          console.error(" Firebase 기록 실패:", err);
         });
       };
     </script>
@@ -46,25 +48,22 @@
     <style>
       html, body {
         margin: 0;
-        padding: 0;
-        background: #000;
-        overflow: hidden;
         height: 100%;
-        width: 100%;
+        background: black;
+        overflow: hidden;
       }
 
       #unity-container {
         width: 100vw;
         height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
       }
 
       canvas {
         width: 100%;
         height: 100%;
-        background: #231F20;
       }
     </style>
   </head>
@@ -74,17 +73,16 @@
       <canvas id="unity-canvas"></canvas>
     </div>
 
-    <!-- Unity 로더 스크립트 -->
+    <!-- Unity WebGL 로더 -->
     <script>
       const buildUrl = "Build";
       const loaderUrl = buildUrl + "/CardMatchGame.loader.js";
-
       const config = {
         dataUrl: buildUrl + "/CardMatchGame.data",
         frameworkUrl: buildUrl + "/CardMatchGame.framework.js",
         codeUrl: buildUrl + "/CardMatchGame.wasm",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
+        companyName: "StudioBinguru",
         productName: "CardMatchGame",
         productVersion: "1.0",
       };
@@ -93,11 +91,11 @@
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(document.querySelector("#unity-canvas"), config, (progress) => {
-          console.log(`Progress: ${Math.floor(progress * 100)}%`);
+          console.log(`로딩 중: ${Math.floor(progress * 100)}%`);
         }).then((unityInstance) => {
-          console.log("Unity WebGL 로드 완료");
+          console.log(" Unity WebGL 로드 완료");
         }).catch((err) => {
-          alert("Unity 로드 실패: " + err);
+          alert(" Unity 로딩 실패: " + err);
         });
       };
       document.body.appendChild(script);
