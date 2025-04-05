@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600></canvas>
+      <canvas id="unity-canvas" width=800 height=600></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -56,11 +56,11 @@
       }
 
       var buildUrl = ".";
-      var loaderUrl = buildUrl + "/WebGLBuildTemp.loader.js";
+      var loaderUrl = buildUrl + "/CardMatchGame.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WebGLBuildTemp.data",
-        frameworkUrl: buildUrl + "/WebGLBuildTemp.framework.js",
-        codeUrl: buildUrl + "/WebGLBuildTemp.wasm",
+        dataUrl: buildUrl + "/CardMatchGame.data",
+        frameworkUrl: buildUrl + "/CardMatchGame.framework.js",
+        codeUrl: buildUrl + "/CardMatchGame.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "CardMatchGame",
@@ -93,7 +93,7 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "960px";
+        canvas.style.width = "800px";
         canvas.style.height = "600px";
       }
 
