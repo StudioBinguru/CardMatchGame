@@ -158,9 +158,9 @@ public abstract class CardGameManager : MonoBehaviour, ICardFlipReceiver, ICardI
         GridLayoutGroup grid = cardGrid.GetComponent<GridLayoutGroup>();
 
         float scale = 1f;
-        if (rows <= 3) scale = 1f;
-        else if (rows <= 4) scale = 0.8f;
-        else if (rows <= 5) scale = 0.7f;
+        if (rows <= 3) scale = 1.25f;
+        else if (rows <= 4) scale = 1f;
+        else if (rows <= 5) scale = 0.8f;
         else scale = 0.6f;
 
         grid.cellSize = baseCellSize * scale;

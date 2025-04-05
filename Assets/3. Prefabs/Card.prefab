@@ -52,11 +52,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d7d75f2523189848a18ab89eec3f95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pairId: 0
   icon: {fileID: 3147814239105080811}
   iconRect: {fileID: 3147814239105080808}
   front: {fileID: 3147814238008342508}
   back: {fileID: 3147814239223272493}
   flipDuration: 0.1
+  isMatched: 0
 --- !u!114 &2734142109425265242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +114,7 @@ GameObject:
   - component: {fileID: 3147814238008342511}
   - component: {fileID: 3147814238008342497}
   - component: {fileID: 3147814238008342510}
+  - component: {fileID: 1949402478231426760}
   m_Layer: 5
   m_Name: Front
   m_TagString: Untagged
@@ -178,6 +181,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1949402478231426760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147814238008342508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &3147814239105080809
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +283,7 @@ GameObject:
   - component: {fileID: 3147814239223272492}
   - component: {fileID: 3147814239223272495}
   - component: {fileID: 1998848000615384401}
+  - component: {fileID: 3645866314732910295}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -330,3 +349,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3645866314732910295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147814239223272493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_UseGraphicAlpha: 1

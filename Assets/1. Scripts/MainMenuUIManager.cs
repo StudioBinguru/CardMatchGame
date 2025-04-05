@@ -1,14 +1,23 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuUIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI highScoreText;
+    [SerializeField] private Button resetButton;
+    [SerializeField] private GameObject resetRecordPanel;
 
     private void Start()
     {
         SetHighScore();
+        resetButton.onClick.AddListener(() =>
+        {
+            GameDataManager.Instance.ResetRecord();
+            SetHighScore();                          // 텍스트 갱신
+            resetRecordPanel.SetActive(false);       // 패널 비활성화
+        });
     }
     public void StartSinglePlay()
     {
@@ -18,7 +27,7 @@ public class MainMenuUIManager : MonoBehaviour
     public void SetHighScore()
     {
         var best = GameDataManager.Instance.BestRecord;
-        highScoreText.text = $"최고 기록\n Stage{Mathf.Max(1, best.stage)}\n{best.score}점";
+        highScoreText.text = $"<color=#0E58FF>최고 기록</color>\n[Stage {Mathf.Max(1, best.stage)}] {best.score}점";
     }
     public void SelectPlayerCount(int count)
     {

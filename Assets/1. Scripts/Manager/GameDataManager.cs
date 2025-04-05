@@ -68,5 +68,7 @@ public class GameDataManager : MonoBehaviour
         PlayerPrefs.DeleteKey(Key_BestRecord);
         bestRecord = new HighScoreData { stage = 0, score = 0 };
         PlayerPrefs.Save();
+
+        LoadData();
     }
 }

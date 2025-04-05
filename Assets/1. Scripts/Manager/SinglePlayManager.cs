@@ -60,7 +60,7 @@ public class SinglePlayManager : CardGameManager
             retryButton.onClick.AddListener(OnClickRetry);
 
             GameDataManager.HighScoreData best = GameDataManager.Instance.BestRecord;
-            highScoreText.text = $"최고 기록\n Stage{Mathf.Max(1, best.stage)}\n{best.score}점";
+            highScoreText.text = $"<color=#0E58FF>최고 기록</color>\n Stage{Mathf.Max(1, best.stage)}\n{best.score}점";
 
             currentScore = 0;
             scoreText.text = $"현재 기록\n Stage{currentStage + 1}\n{currentScore}점";
@@ -191,6 +191,9 @@ public class SinglePlayManager : CardGameManager
         timer.StopTimer();
         isInteractionBlocked = true;
 
+        string playerId = SystemInfo.deviceUniqueIdentifier; // 또는 원하는 방식으로
+        ScoreUploader.Instance.UploadScore(playerId, currentStage + 1, currentScore);
+
         gameOverPanel.SetActive(true);
     }
     private void OnClickRetry()
@@ -243,7 +246,7 @@ public class SinglePlayManager : CardGameManager
         if (currentStage + 1 > best.stage || currentScore > best.score)
         {
             newRecordStar.SetActive(true);
-            highScoreText.text = $"최고 기록\n Stage{currentStage + 1}\n{currentScore}점";
+            highScoreText.text = $"<color=#0E58FF>최고 기록</color>\n Stage{currentStage + 1}\n{currentScore}점";
         }
     }
 
