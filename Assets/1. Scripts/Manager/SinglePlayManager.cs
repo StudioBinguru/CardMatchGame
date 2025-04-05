@@ -66,7 +66,12 @@ public class SinglePlayManager : CardGameManager
             scoreText.text = $"현재 기록\n Stage{currentStage + 1}\n{currentScore}점";
 
             StartCoroutine(PlayStage(currentStage));
+            GameSessionLogger.Instance.StartPlaySession("Single");
         }
+    }
+    private void OnDestroy()
+    {
+        GameSessionLogger.Instance.EndPlaySession(currentStage +1, currentScore);
     }
 
     protected override IEnumerator PlayStage(int index)
@@ -191,16 +196,12 @@ public class SinglePlayManager : CardGameManager
         timer.StopTimer();
         isInteractionBlocked = true;
 
-        string playerId = SystemInfo.deviceUniqueIdentifier;
-
-#if UNITY_WEBGL
-        WebGLScoreUploader.Instance.UploadScore(playerId, currentStage + 1, currentScore);
-#else
-    ScoreUploader.Instance.UploadScore(playerId, currentStage + 1, currentScore);
-#endif
+        // 점수 업로드는 GameSessionLogger에서 처리하므로 별도 업로드 X
+        GameSessionLogger.Instance.EndPlaySession(currentStage + 1, currentScore);
 
         gameOverPanel.SetActive(true);
     }
+
     private void OnClickRetry()
     {
         gameOverPanel.SetActive(false);

@@ -12,13 +12,10 @@ public class GameDataManager : MonoBehaviour
     public static GameDataManager Instance { get; private set; }
 
     [SerializeField, ReadOnly] private HighScoreData bestRecord = new HighScoreData();
-    [SerializeField, ReadOnly] private bool isSoundOn = true;
 
     public HighScoreData BestRecord => bestRecord;
-    public bool IsSoundOn => isSoundOn;
 
     private const string Key_BestRecord = "BestRecord";
-    private const string Key_SoundOn = "SoundOn";
 
     private void Awake()
     {
@@ -33,7 +30,6 @@ public class GameDataManager : MonoBehaviour
 
         LoadData();
     }
-
     public void SaveBestRecord(int stage, int score)
     {
         if (score > bestRecord.score)
@@ -47,11 +43,6 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
-    public void SetSound(bool isOn)
-    {
-        isSoundOn = isOn;
-        PlayerPrefs.SetInt(Key_SoundOn, isSoundOn ? 1 : 0);
-    }
 
     private void LoadData()
     {
@@ -60,8 +51,6 @@ public class GameDataManager : MonoBehaviour
         {
             bestRecord = JsonUtility.FromJson<HighScoreData>(json);
         }
-
-        isSoundOn = PlayerPrefs.GetInt(Key_SoundOn, 1) == 1;
     }
     public void ResetRecord()
     {

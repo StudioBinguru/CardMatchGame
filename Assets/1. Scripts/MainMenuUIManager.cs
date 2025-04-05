@@ -11,6 +11,7 @@ public class MainMenuUIManager : MonoBehaviour
 
     private void Start()
     {
+        GameSessionLogger.Instance.StartGameSession();
         SetHighScore();
         resetButton.onClick.AddListener(() =>
         {
@@ -38,5 +39,9 @@ public class MainMenuUIManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("게임 종료");
+    }
+    private void OnApplicationQuit()
+    {
+        GameSessionLogger.Instance.EndGameSession();
     }
 }

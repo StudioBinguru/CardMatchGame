@@ -1,8 +1,7 @@
 #if !UNITY_WEBGL
-using UnityEngine;
-using System;
-using Firebase.Database;
 using Firebase.Extensions;
+using System;
+using UnityEngine;
 
 public class ScoreUploader : MonoBehaviour
 {
@@ -10,32 +9,43 @@ public class ScoreUploader : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) { Destroy(gameObject); return; }
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-    public void UploadScore(string playerId, int stage, int score)
+    public void UploadSession(GameSessionLog session)
     {
-        string key = FirebaseInitializer.Instance.DBReference.Child("scores").Push().Key;
+        string key = FirebaseInitializer.Instance.DBReference.Child("sessionLogs").Push().Key;
+        string json = JsonUtility.ToJson(session);
 
-        ScoreData data = new ScoreData
-        {
-            playerId = playerId,
-            stage = stage,
-            score = score,
-            timestamp = DateTime.UtcNow.ToString("o")
-        };
-
-        string json = JsonUtility.ToJson(data);
-        FirebaseInitializer.Instance.DBReference.Child("scores").Child(key)
+        FirebaseInitializer.Instance.DBReference.Child("sessionLogs").Child(key)
             .SetRawJsonValueAsync(json)
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCompleted)
-                    Debug.Log("점수 업로드 완료");
+                    Debug.Log("세션 로그 업로드 완료");
                 else
-                    Debug.LogError("점수 업로드 실패: " + task.Exception);
+                    Debug.LogError("세션 로그 업로드 실패: " + task.Exception);
+            });
+    }
+
+    public void UploadPlayLog(PlaySessionLog playLog)
+    {
+        string key = FirebaseInitializer.Instance.DBReference.Child("playLogs").Push().Key;
+        string json = JsonUtility.ToJson(playLog);
+
+        FirebaseInitializer.Instance.DBReference.Child("playLogs").Child(key)
+            .SetRawJsonValueAsync(json)
+            .ContinueWithOnMainThread(task =>
+            {
+                if (task.IsCompleted)
+                    Debug.Log("플레이 로그 업로드 완료");
+                else
+                    Debug.LogError("플레이 로그 업로드 실패: " + task.Exception);
             });
     }
 

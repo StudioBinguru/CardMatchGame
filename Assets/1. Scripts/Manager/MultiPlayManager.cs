@@ -35,6 +35,11 @@ public class MultiPlayManager : CardGameManager
 
         InitializeProfiles(playerCount);
         StartCoroutine(PlayStage(0)); // index는 의미 없지만 CardGameManager 구조 맞추기 위해 유지
+        GameSessionLogger.Instance.StartPlaySession("Multi");
+    }
+    private void OnDestroy()
+    {
+        GameSessionLogger.Instance.EndPlaySession(playerCount, 0);
     }
     private void InitializeProfiles(int count)
     {

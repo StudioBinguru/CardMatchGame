@@ -22,26 +22,36 @@
         measurementId: "G-KCK0QTF6BT"
       };
 
-      // Firebase 초기화
       firebase.initializeApp(firebaseConfig);
 
-      // Unity에서 호출할 전역 함수
-      window.UploadScoreToFirebase = function (playerId, stage, score) {
-        if (!firebase || !firebase.database) {
-          console.error("Firebase가 아직 초기화되지 않았습니다.");
-          return;
+      // 반드시 window에 바인딩해야 Unity에서 DllImport("__Internal")로 호출 가능
+      window.UploadSessionToFirebase = function (jsonSession) {
+        try {
+          const session = JSON.parse(jsonSession);
+          firebase.database().ref("sessionLogs").push(session)
+            .then(() => console.log("GameSession 업로드 성공"))
+            .catch((err) => console.error("GameSession 업로드 실패:", err));
+        } catch (e) {
+          console.error("GameSession JSON 파싱 실패:", e);
         }
+      };
 
-        firebase.database().ref("scores").push({
-          playerId: playerId,
-          stage: stage,
-          score: score,
-          timestamp: new Date().toISOString()
-        }).then(() => {
-          console.log(" Firebase 기록 성공");
-        }).catch((err) => {
-          console.error(" Firebase 기록 실패:", err);
-        });
+      window.UploadPlayLogToFirebase = function (jsonPlayLog) {
+        try {
+          const playLog = JSON.parse(jsonPlayLog);
+          firebase.database().ref("playLogs").push(playLog)
+            .then(() => console.log("PlaySession 업로드 성공"))
+            .catch((err) => console.error("PlaySession 업로드 실패:", err));
+        } catch (e) {
+          console.error("PlaySession JSON 파싱 실패:", e);
+        }
+      };
+
+      // Unity WebGL 앱 종료 시 GameSessionLogger 호출
+      window.onbeforeunload = function () {
+        if (typeof unityInstance !== "undefined") {
+          unityInstance.SendMessage("GameSessionLogger", "EndGameSessionFromWeb");
+        }
       };
     </script>
 
@@ -77,6 +87,7 @@
     <script>
       const buildUrl = "Build";
       const loaderUrl = buildUrl + "/CardMatchGame.loader.js";
+
       const config = {
         dataUrl: buildUrl + "/CardMatchGame.data",
         frameworkUrl: buildUrl + "/CardMatchGame.framework.js",
@@ -93,9 +104,9 @@
         createUnityInstance(document.querySelector("#unity-canvas"), config, (progress) => {
           console.log(`로딩 중: ${Math.floor(progress * 100)}%`);
         }).then((unityInstance) => {
-          console.log(" Unity WebGL 로드 완료");
+          console.log("Unity WebGL 로드 완료");
         }).catch((err) => {
-          alert(" Unity 로딩 실패: " + err);
+          alert("Unity 로딩 실패: " + err);
         });
       };
       document.body.appendChild(script);
