@@ -7,7 +7,7 @@ public class ScoreUploader : MonoBehaviour
     public static ScoreUploader Instance { get; private set; }
 
     // Google Apps Script에서 발급받은 배포 URL
-    [SerializeField] private string googleScriptUrl = "https://script.google.com/macros/s/AKfycbyEc7nN3GWJhyK6Fm7bDRpFQz1f4yQTxAp_GgI6XqngbLrab-OawlCwuywpq41TJoQ/exec";
+    [SerializeField] private string googleScriptUrl = "https://corsproxy.io/?https://script.google.com/macros/s/AKfycbyEc7nN3GWJhyK6Fm7bDRpFQz1f4yQTxAp_GgI6XqngbLrab-OawlCwuywpq41TJoQ/exec";
 
     private void Awake()
     {
