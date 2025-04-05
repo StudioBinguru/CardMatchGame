@@ -47,9 +47,10 @@ public class GameSessionLogger : MonoBehaviour
         gameSessionLog.highScore = GameDataManager.Instance.BestRecord.score;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-    WebGLScoreUploader.Instance.UploadSession(gameSessionLog);
+    string json = JsonUtility.ToJson(gameSessionLog);
+    Application.ExternalCall("UploadSessionToFirebase", json);
 #elif !UNITY_WEBGL
-    ScoreUploader.Instance.UploadSession(gameSessionLog);
+        ScoreUploader.Instance.UploadSession(gameSessionLog);
 #endif
 
         Debug.Log("[GameSession] Ended");

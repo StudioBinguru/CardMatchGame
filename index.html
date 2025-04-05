@@ -24,7 +24,7 @@
 
       firebase.initializeApp(firebaseConfig);
 
-      // 반드시 window에 바인딩해야 Unity에서 DllImport("__Internal")로 호출 가능
+      // Unity -> JavaScript 함수 바인딩
       window.UploadSessionToFirebase = function (jsonSession) {
         try {
           const session = JSON.parse(jsonSession);
@@ -58,6 +58,7 @@
     <style>
       html, body {
         margin: 0;
+        padding: 0;
         height: 100%;
         background: black;
         overflow: hidden;
@@ -72,8 +73,8 @@
       }
 
       canvas {
-        width: 100%;
-        height: 100%;
+        display: block;
+        background: #000;
       }
     </style>
   </head>
@@ -83,7 +84,7 @@
       <canvas id="unity-canvas"></canvas>
     </div>
 
-    <!-- Unity WebGL 로더 -->
+    <!-- Unity WebGL 로더 및 화면 크기 자동 조정 -->
     <script>
       const buildUrl = ".";
       const loaderUrl = buildUrl + "/CardMatchGame.loader.js";
@@ -98,18 +99,30 @@
         productVersion: "1.0",
       };
 
+      // Unity 로더 실행
       const script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
         createUnityInstance(document.querySelector("#unity-canvas"), config, (progress) => {
           console.log(`로딩 중: ${Math.floor(progress * 100)}%`);
         }).then((unityInstance) => {
+          window.unityInstance = unityInstance;
           console.log("Unity WebGL 로드 완료");
         }).catch((err) => {
           alert("Unity 로딩 실패: " + err);
         });
       };
       document.body.appendChild(script);
+
+      // 브라우저 창 크기에 맞춰 canvas 자동 조정
+      function resizeCanvas() {
+        const canvas = document.getElementById("unity-canvas");
+        canvas.style.width = window.innerWidth + "px";
+        canvas.style.height = window.innerHeight + "px";
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      window.addEventListener("load", resizeCanvas);
     </script>
   </body>
 </html>
