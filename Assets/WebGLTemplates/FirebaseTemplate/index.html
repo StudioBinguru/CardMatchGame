@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CardMatchGame</title>
 
-    <!-- Firebase SDK (CDN 버전) -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+    <!-- Firebase SDK v8 사용 (v9은 모듈 방식이라 Unity WebGL과 충돌) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
 
     <!-- Firebase 초기화 -->
     <script>
-      const firebaseConfig = {
+      var firebaseConfig = {
         apiKey: "AIzaSyAMk7TPjeVCzpNpOwcAEOfaenIRvbwgaNg",
         authDomain: "cardmatchgame-2a2af.firebaseapp.com",
         databaseURL: "https://cardmatchgame-2a2af-default-rtdb.firebaseio.com",
@@ -27,19 +27,18 @@
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
 
-      // Unity에서 호출할 함수 등록 (예: 점수 업로드)
+      // Unity에서 호출할 함수 등록
       window.UploadScoreToFirebase = function (playerId, stage, score) {
-        const db = firebase.database();
-        const ref = db.ref("scores").push();
+        const ref = firebase.database().ref("scores").push();
         ref.set({
-          timestamp: new Date().toISOString(),
-          playerId,
-          stage,
-          score
+          playerId: playerId,
+          stage: stage,
+          score: score,
+          timestamp: new Date().toISOString()
         }).then(() => {
-          console.log(" Firebase 기록 성공");
+          console.log("Firebase 기록 성공");
         }).catch((error) => {
-          console.error(" Firebase 기록 실패:", error);
+          console.error("Firebase 기록 실패:", error);
         });
       };
     </script>
@@ -75,10 +74,10 @@
       <canvas id="unity-canvas"></canvas>
     </div>
 
-    <!-- Unity 로더 불러오기 -->
+    <!-- Unity 로더 스크립트 -->
     <script>
       const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/CardMatchGame.loader.js"; //정확한 파일명 사용
+      const loaderUrl = buildUrl + "/CardMatchGame.loader.js";
 
       const config = {
         dataUrl: buildUrl + "/CardMatchGame.data",
