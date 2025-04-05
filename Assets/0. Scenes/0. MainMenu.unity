@@ -1189,7 +1189,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.83921576, g: 0.9215687, b: 0.70980394, a: 0}
+  m_BackGroundColor: {r: 0.83921576, g: 0.9215687, b: 0.70980394, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2099,7 +2099,6 @@ MonoBehaviour:
   bestRecord:
     stage: 0
     score: 0
-  isSoundOn: 0
 --- !u!4 &890970612
 Transform:
   m_ObjectHideFlags: 0
