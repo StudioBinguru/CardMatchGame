@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CardMatchGame</title>
+
+    <!-- Firebase SDK (CDN 버전) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js"></script>
+
+    <!-- Firebase 초기화 -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAMk7TPjeVCzpNpOwcAEOfaenIRvbwgaNg",
+        authDomain: "cardmatchgame-2a2af.firebaseapp.com",
+        databaseURL: "https://cardmatchgame-2a2af-default-rtdb.firebaseio.com",
+        projectId: "cardmatchgame-2a2af",
+        storageBucket: "cardmatchgame-2a2af.appspot.com",
+        messagingSenderId: "867887350190",
+        appId: "1:867887350190:web:e5500ca2209120826e083f",
+        measurementId: "G-KCK0QTF6BT"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      // Unity에서 호출할 함수 등록 (예: 점수 업로드)
+      window.UploadScoreToFirebase = function (playerId, stage, score) {
+        const db = firebase.database();
+        const ref = db.ref("scores").push();
+        ref.set({
+          timestamp: new Date().toISOString(),
+          playerId,
+          stage,
+          score
+        }).then(() => {
+          console.log(" Firebase 기록 성공");
+        }).catch((error) => {
+          console.error(" Firebase 기록 실패:", error);
+        });
+      };
+    </script>
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+      }
+
+      #unity-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      canvas {
+        width: 100%;
+        height: 100%;
+        background: #231F20;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="unity-container">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+
+    <!-- Unity 로더 불러오기 -->
+    <script>
+      const buildUrl = "Build";
+      const loaderUrl = buildUrl + "/CardMatchGame.loader.js"; //정확한 파일명 사용
+
+      const config = {
+        dataUrl: buildUrl + "/CardMatchGame.data",
+        frameworkUrl: buildUrl + "/CardMatchGame.framework.js",
+        codeUrl: buildUrl + "/CardMatchGame.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "CardMatchGame",
+        productVersion: "1.0",
+      };
+
+      const script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(document.querySelector("#unity-canvas"), config, (progress) => {
+          console.log(`Progress: ${Math.floor(progress * 100)}%`);
+        }).then((unityInstance) => {
+          console.log("Unity WebGL 로드 완료");
+        }).catch((err) => {
+          alert("Unity 로드 실패: " + err);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "867887350190",
+    "firebase_url": "https://cardmatchgame-2a2af-default-rtdb.firebaseio.com",
+    "project_id": "cardmatchgame-2a2af",
+    "storage_bucket": "cardmatchgame-2a2af.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867887350190:android:216685908d9404436e083f",
+        "android_client_info": {
+          "package_name": "com.StudioBinguru.CardMatchGame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU7iIqM5CcGUHVcXFLB_8KkDBolTtO7rE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -191,8 +191,13 @@ public class SinglePlayManager : CardGameManager
         timer.StopTimer();
         isInteractionBlocked = true;
 
-        string playerId = SystemInfo.deviceUniqueIdentifier; // 또는 원하는 방식으로
-        ScoreUploader.Instance.UploadScore(playerId, currentStage + 1, currentScore);
+        string playerId = SystemInfo.deviceUniqueIdentifier;
+
+#if UNITY_WEBGL
+        WebGLScoreUploader.Instance.UploadScore(playerId, currentStage + 1, currentScore);
+#else
+    ScoreUploader.Instance.UploadScore(playerId, currentStage + 1, currentScore);
+#endif
 
         gameOverPanel.SetActive(true);
     }

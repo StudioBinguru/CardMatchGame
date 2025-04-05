@@ -14,6 +14,9 @@
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
 
+# Firebase Plugins (GitHub 용량 제한 회피용)
+Assets/Firebase/Plugins/
+
 # Recordings can get excessive in size
 /[Rr]ecordings/
 
