@@ -3068,101 +3068,101 @@ MonoBehaviour:
     rows: 2
     columns: 2
     timeLimit: 10
-    adjacentPairRatio: 0.75
+    adjacentPairRatio: 0.5
   - openMode: 1
     rows: 2
     columns: 2
     timeLimit: 10
-    adjacentPairRatio: 0.75
+    adjacentPairRatio: 0.5
   - openMode: 0
     rows: 2
     columns: 3
     timeLimit: 12
-    adjacentPairRatio: 0.75
+    adjacentPairRatio: 0.5
   - openMode: 1
     rows: 2
     columns: 3
     timeLimit: 12
-    adjacentPairRatio: 0.75
+    adjacentPairRatio: 0.5
   - openMode: 0
     rows: 3
     columns: 4
-    timeLimit: 20
-    adjacentPairRatio: 0.75
+    timeLimit: 15
+    adjacentPairRatio: 0.5
   - openMode: 0
     rows: 3
     columns: 4
-    timeLimit: 20
+    timeLimit: 15
     adjacentPairRatio: 0
-  - openMode: 1
-    rows: 3
-    columns: 4
-    timeLimit: 20
-    adjacentPairRatio: 0.75
   - openMode: 1
     rows: 3
     columns: 4
     timeLimit: 20
+    adjacentPairRatio: 0.5
+  - openMode: 1
+    rows: 3
+    columns: 4
+    timeLimit: 20
     adjacentPairRatio: 0
   - openMode: 0
     rows: 4
     columns: 4
-    timeLimit: 30
-    adjacentPairRatio: 0.75
+    timeLimit: 20
+    adjacentPairRatio: 0.5
   - openMode: 0
     rows: 4
     columns: 4
-    timeLimit: 30
+    timeLimit: 20
     adjacentPairRatio: 0
   - openMode: 1
     rows: 4
     columns: 4
-    timeLimit: 30
-    adjacentPairRatio: 0.75
+    timeLimit: 25
+    adjacentPairRatio: 0.5
   - openMode: 1
     rows: 4
     columns: 4
+    timeLimit: 25
+    adjacentPairRatio: 0
+  - openMode: 0
+    rows: 4
+    columns: 5
+    timeLimit: 25
+    adjacentPairRatio: 0.5
+  - openMode: 0
+    rows: 4
+    columns: 5
+    timeLimit: 25
+    adjacentPairRatio: 0
+  - openMode: 1
+    rows: 4
+    columns: 5
+    timeLimit: 30
+    adjacentPairRatio: 0.5
+  - openMode: 1
+    rows: 4
+    columns: 5
     timeLimit: 30
     adjacentPairRatio: 0
   - openMode: 0
-    rows: 4
-    columns: 5
-    timeLimit: 40
-    adjacentPairRatio: 0.75
-  - openMode: 0
-    rows: 4
-    columns: 5
-    timeLimit: 40
-    adjacentPairRatio: 0
-  - openMode: 1
-    rows: 4
-    columns: 5
-    timeLimit: 40
-    adjacentPairRatio: 0.75
-  - openMode: 1
-    rows: 4
-    columns: 5
-    timeLimit: 40
-    adjacentPairRatio: 0
+    rows: 5
+    columns: 6
+    timeLimit: 30
+    adjacentPairRatio: 0.5
   - openMode: 0
     rows: 5
     columns: 6
-    timeLimit: 50
-    adjacentPairRatio: 0.75
-  - openMode: 0
-    rows: 5
-    columns: 6
-    timeLimit: 50
+    timeLimit: 30
     adjacentPairRatio: 0
   - openMode: 1
     rows: 5
     columns: 6
-    timeLimit: 50
-    adjacentPairRatio: 0.75
+    timeLimit: 40
+    adjacentPairRatio: 0.5
   - openMode: 1
     rows: 5
     columns: 6
-    timeLimit: 50
+    timeLimit: 40
     adjacentPairRatio: 0
   stageResultPanel: {fileID: 1865115465}
   clearText: {fileID: 222918058}

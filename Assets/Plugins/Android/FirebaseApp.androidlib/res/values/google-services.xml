@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="firebase_database_url" translatable="false">https://cardmatchgame-2a2af-default-rtdb.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">867887350190</string>
+  <string name="google_storage_bucket" translatable="false">cardmatchgame-2a2af.firebasestorage.app</string>
+  <string name="project_id" translatable="false">cardmatchgame-2a2af</string>
+  <string name="google_api_key" translatable="false">AIzaSyCU7iIqM5CcGUHVcXFLB_8KkDBolTtO7rE</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCU7iIqM5CcGUHVcXFLB_8KkDBolTtO7rE</string>
+  <string name="google_app_id" translatable="false">1:867887350190:android:216685908d9404436e083f</string>
+</resources>
