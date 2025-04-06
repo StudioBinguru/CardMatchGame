@@ -66,12 +66,12 @@ public class SinglePlayManager : CardGameManager
             scoreText.text = $"현재 기록\n Stage{currentStage + 1}\n{currentScore}점";
 
             StartCoroutine(PlayStage(currentStage));
-            GameSessionLogger.Instance.StartPlaySession("Single");
+            GameSessionLogger.Instance.StartPlaySession("Single"); //Play Session 기록 시작
         }
     }
     private void OnDestroy()
     {
-        GameSessionLogger.Instance.EndPlaySession(currentStage +1, currentScore);
+        GameSessionLogger.Instance.EndPlaySession(currentStage +1, currentScore); //Play Session 기록 종료
     }
 
     protected override IEnumerator PlayStage(int index)
@@ -85,7 +85,7 @@ public class SinglePlayManager : CardGameManager
         timer.SetTime(currentStageTimeLimit);
 
         if (data.openMode == CardOpenMode.AllAtOnce)
-        {
+        {   // 카드 전체 한번에 오픈
             foreach (Card card in cardPool)
                 if (card.gameObject.activeSelf) card.ShowFront();
 
@@ -97,7 +97,7 @@ public class SinglePlayManager : CardGameManager
             isInteractionBlocked = false;
         }
         else
-        {
+        {   //한 장씩 오픈
             isInteractionBlocked = true;
 
             foreach (Card card in cardPool)
@@ -119,8 +119,10 @@ public class SinglePlayManager : CardGameManager
         timer.StartRunning();
         timer.OnTimeOver = OnTimeOut;
     }
+
+    //스테이지에 따라 카드 배치
     private void GenerateCardsFromStage(int stageIndex)
-    {
+    {   
         StageData data = stages[stageIndex];
 
         int totalCards = data.rows * data.columns;
@@ -195,10 +197,6 @@ public class SinglePlayManager : CardGameManager
     {
         timer.StopTimer();
         isInteractionBlocked = true;
-
-        // 점수 업로드는 GameSessionLogger에서 처리하므로 별도 업로드 X
-        GameSessionLogger.Instance.EndPlaySession(currentStage + 1, currentScore);
-
         gameOverPanel.SetActive(true);
     }
 
@@ -234,8 +232,8 @@ public class SinglePlayManager : CardGameManager
         currentScore += value;
         UpdateScoreUI();
 
-        // 최고 기록 즉시 저장
-        GameDataManager.Instance.SaveBestRecord(currentStage + 1, currentScore);
+        GameDataManager.Instance.SaveBestRecord(currentStage + 1, currentScore); // 최고 기록과 비교
+
     }
     protected override void UpdateScoreUI()
     {

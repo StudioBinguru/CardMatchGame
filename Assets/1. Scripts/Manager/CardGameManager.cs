@@ -155,6 +155,7 @@ public abstract class CardGameManager : MonoBehaviour, ICardFlipReceiver, ICardI
 
     private void SetFixedCardScale(int rows)
     {
+        //카드 배열 크기에 따라 카드 사이즈 조정
         GridLayoutGroup grid = cardGrid.GetComponent<GridLayoutGroup>();
 
         float scale = 1f;

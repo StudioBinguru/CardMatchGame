@@ -5,40 +5,25 @@ using TMPro;
 
 public class TimerController : MonoBehaviour
 {
-    #region UI Elements
 
     [Header("UI")]
     [SerializeField] private Slider timerSlider;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private Image fillImage;
 
-    #endregion
-
-    #region Timer Sprites
-
     [Header("Sprite")]
     [SerializeField] private Sprite normalFillSprite;
     [SerializeField] private Sprite warningFillSprite;
-
-    #endregion
-
-    #region Timer State
 
     private float totalTime;
     private float timeRemaining;
     private bool isRunning = false;
 
-    #endregion
-
-    #region Events
-
     public Action OnTimeOver;
-
-    #endregion
 
     #region Public Methods
 
-    // 타이머를 설정합니다. 이 시점에는 흐르지 않고, 시각 요소만 보여줍니다.
+    // 타이머 시간 세팅
     public void SetTime(float duration)
     {
         totalTime = duration;
@@ -48,19 +33,19 @@ public class TimerController : MonoBehaviour
         UpdateVisuals();
     }
 
-    // 타이머 흐름을 시작합니다. (SetTime 이후에 호출)
+    // 타이머 시작
     public void StartRunning()
     {
         isRunning = true;
     }
 
-    // 타이머를 강제로 멈춥니다.
+    // 타이머 강제로 멈춤
     public void StopTimer()
     {
         isRunning = false;
     }
 
-    // 타이머를 0으로 리셋하고 시각 요소도 초기화합니다.
+    // 타이머를 0으로 리셋, 시각 요소도 초기화
     public void ResetTimer()
     {
         isRunning = false;
@@ -97,10 +82,9 @@ public class TimerController : MonoBehaviour
 
     #region Internal Methods
 
-    // 시간 텍스트, 슬라이더, 색상 등을 업데이트합니다.
+    // 시간 텍스트, 슬라이더, 색상 등을 업데이트
     private void UpdateVisuals()
     {
-        // 슬라이더 갱신
         if (timerSlider != null)
             timerSlider.value = timeRemaining / totalTime;
 
@@ -112,7 +96,7 @@ public class TimerController : MonoBehaviour
             timeText.text = $"{seconds:00}:{hundredths:00}";
         }
 
-        // Fill 이미지 경고 스프라이트 처리
+        // 타이머가 10초 이하로 줄어들면 빨간색으로 변경
         if (fillImage != null)
         {
             if (timeRemaining <= 10f)

@@ -8,7 +8,7 @@ using DG.Tweening;
 public class MultiPlayManager : CardGameManager
 {
     [Header("Multiplayer Settings")]
-    [SerializeField] private StageData multiPlayStage; // 인스펙터에서 설정한 멀티 스테이지 데이터
+    [SerializeField] private StageData multiPlayStage; //멀티 플레이는 5*6 고정
     [SerializeField] private int playerCount;
     [SerializeField] private int currentPlayerIndex = 0;
     [SerializeField] private List<MultiPlayerProfile> playerProfiles = new();
@@ -181,7 +181,7 @@ public class MultiPlayManager : CardGameManager
 
             CheckStageClear();
 
-            // 게임이 종료되지 않았다면, 턴 유지 (타이머 다시 시작)
+            // 게임이 종료되지 않았다면, 턴 유지(타이머 다시 시작)
             if (!isGameOver)
             {
                 timer.SetTime(currentStageTimeLimit);
@@ -196,7 +196,7 @@ public class MultiPlayManager : CardGameManager
             flippedCards.Clear();
             isInteractionBlocked = false;
 
-            NextTurn(); // 오답 시 다음 턴으로 전환
+            NextTurn(); //오답 시 다음 턴으로 전환
         }
     }
     private void NextTurn()

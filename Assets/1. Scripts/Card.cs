@@ -50,7 +50,7 @@ public class Card : MonoBehaviour
         ShowFront(); // 기본적으로 앞면 보여주기
     }
 
-    // 카드 앞면 보여주기 (즉시)
+    // 카드 앞면 보여주기
     public void ShowFront()
     {
         front.SetActive(true);
@@ -58,7 +58,7 @@ public class Card : MonoBehaviour
         isFlipped = true;
     }
 
-    // 카드 뒷면 보여주기 (즉시)
+    // 카드 뒷면 보여주기
     public void FlipBackImmediately()
     {
         isFlipped = false;
@@ -68,7 +68,7 @@ public class Card : MonoBehaviour
         SetCardColor(normalColor);
     }
 
-    // 유저 입력으로 카드 뒤집기
+    // 카드 클릭 시 뒤집기
     public void Flip()
     {
         if (isFlipped || isMatched) return;
@@ -80,7 +80,7 @@ public class Card : MonoBehaviour
         receiver?.OnCardFlipped(this);
     }
 
-    // 카드 뒷면으로 뒤집기
+    // 카드 매칭 실패시 뒷면으로 뒤집기
     public void FlipBack()
     {
         if (!isFlipped || isMatched) return;
@@ -133,6 +133,7 @@ public class Card : MonoBehaviour
         flipRoutine = null; // 종료 처리
     }
 
+    //카드 뒤집을 때 색상 효과
     private void SetCardColor(Color color)
     {
         if (icon != null)
@@ -145,6 +146,7 @@ public class Card : MonoBehaviour
             backImg.color = color;
     }
 
+    //카드 배열 크기에 따라 카드 사이즈 조정
     public void SetIconScale(float scale)
     {
         iconRect.sizeDelta = baseIconSize * scale;

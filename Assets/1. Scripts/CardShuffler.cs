@@ -24,7 +24,7 @@ public class CardShuffler : ICardShuffler
         for (int i = 0; i < allSprites.Length; i++)
             imageIndices.Add(i);
 
-        Shuffle(imageIndices);
+        ShuffleRandom(imageIndices);
 
         pairIdToSprite.Clear();
         for (int i = 0; i < pairCount; i++)
@@ -40,10 +40,10 @@ public class CardShuffler : ICardShuffler
             cardInfos.Add((i, null));
         }
 
-        // 3. 카드 위치 섞기 (Easy 방식)
-        ShuffleEasy(cardInfos, rows, cols, adjacentPairRatio);
+        // 3.AdjacentPairRatio 기반으로 카드 위치 섞기 
+        ShuffleWithAdjacentPairRatio(cardInfos, rows, cols, adjacentPairRatio);
 
-        // 4. 이미지 연결
+        // 4. 이미지 매칭
         for (int i = 0; i < cardInfos.Count; i++)
         {
             int id = cardInfos[i].pairId;
@@ -53,25 +53,26 @@ public class CardShuffler : ICardShuffler
         return cardInfos;
     }
 
-    private void ShuffleEasy(List<(int pairId, Sprite sprite)> cards, int rows, int cols, float ratio)
+    private void ShuffleWithAdjacentPairRatio(List<(int pairId, Sprite sprite)> cards, int rows, int cols, float ratio)
     {
         int totalCards = rows * cols;
         int pairCount = totalCards / 2;
-        int targetAdjacent = Mathf.RoundToInt(pairCount * ratio);
+        int targetAdjacent = Mathf.RoundToInt(pairCount * ratio); //인접하게 배치할 카드 쌍 개수
 
         (int pairId, Sprite)?[] grid = new (int, Sprite)?[totalCards];
         List<int> available = new();
         for (int i = 0; i < totalCards; i++) available.Add(i);
 
         System.Random rand = new();
-        int currentId = 0;
-        int placed = 0;
+        int currentId = 0; // 현재 배치할 pairId
+        int placed = 0; // 인접하게 배치된 카드 쌍 수
 
+        // 인접 카드 배치 시도
         while (currentId < pairCount && available.Count >= 2)
         {
             int first = available[rand.Next(available.Count)];
             List<int> neighbors = GetNeighbors(first, rows, cols);
-            Shuffle(neighbors);
+            ShuffleRandom(neighbors);
 
             bool success = false;
             foreach (int neighbor in neighbors)
@@ -89,11 +90,12 @@ public class CardShuffler : ICardShuffler
                 }
             }
 
-            if (!success) break;
-            if (placed >= targetAdjacent) break;
+            if (!success) break; // 더 이상 인접 배치 불가 시 종료
+            if (placed >= targetAdjacent) break; // 목표치 달성 시 종료
         }
 
-        Shuffle(available);
+        //인접 배치 외에 나머지는 무작위 배치
+        ShuffleRandom(available);
         while (currentId < pairCount && available.Count >= 2)
         {
             int a = available[0];
@@ -115,9 +117,10 @@ public class CardShuffler : ICardShuffler
     private List<int> GetNeighbors(int index, int rows, int cols)
     {
         List<int> neighbors = new();
-        int r = index / cols;
-        int c = index % cols;
+        int r = index / cols; // 현재 행 계산
+        int c = index % cols; // 현재 열 계산
 
+        // 상하좌우 인접한 위치가 유효하면 neighbors에 추가
         if (r > 0) neighbors.Add((r - 1) * cols + c);
         if (r < rows - 1) neighbors.Add((r + 1) * cols + c);
         if (c > 0) neighbors.Add(r * cols + (c - 1));
@@ -126,7 +129,7 @@ public class CardShuffler : ICardShuffler
         return neighbors;
     }
 
-    private void Shuffle<T>(List<T> list)
+    private void ShuffleRandom<T>(List<T> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
         {
