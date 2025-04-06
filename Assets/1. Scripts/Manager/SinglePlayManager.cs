@@ -205,8 +205,9 @@ public class SinglePlayManager : CardGameManager
         gameOverPanel.SetActive(false);
 
         currentStage = 0;               // 스테이지 초기화
+        currentScore = 0;
         ClearBoard();                   // 카드 상태 초기화
-
+        scoreText.text = $"현재 기록\n Stage{currentStage + 1}\n{currentScore}점"; //현재 기록 초기화
         StartCoroutine(PlayStage(currentStage)); // 첫 스테이지부터 재시작
     }
     private void OnClickContinue()
